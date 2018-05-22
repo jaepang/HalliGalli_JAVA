@@ -5,6 +5,8 @@ Currently on PRACTICE step
 */
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 public class GUI extends JFrame {
@@ -19,14 +21,29 @@ public class GUI extends JFrame {
         Container contentPane = this.getContentPane();
         JPanel pane = new JPanel();
         JButton buttonStart = new JButton("Start");
-        JTextField textPeriod = new JTextField(5);
+        final JTextField textPeriod = new JTextField(5);
         JLabel labelPeriod = new JLabel("Input period: ");
+        JCheckBox checkboxIsRandom = new JCheckBox("Fire randomly");
+
+        checkboxIsRandom.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if(((JCheckBox)e.getSource()).isSelected()){
+                    textPeriod.setText("Random");
+                    textPeriod.setEnabled(false);
+                }else{
+                    textPeriod.setText("");
+                    textPeriod.setEnabled(true);
+                }
+            }
+        });
 
         buttonStart.setMnemonic('S');
 
         pane.add(buttonStart);
         pane.add(labelPeriod);
         pane.add(textPeriod);
+        pane.add(checkboxIsRandom);
         contentPane.add(pane);
 
         setVisible(true);
