@@ -1,3 +1,6 @@
+/*
+    Studying with: "http://zetcode.com/tutorials/javagamestutorial/basics/"
+*/
 import javax.swing.*;
 
 public class GUI extends JFrame {
@@ -11,7 +14,7 @@ public class GUI extends JFrame {
 
         setSize(800, 600);
 
-        setTitle("Application");
+        setTitle("Donut");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
