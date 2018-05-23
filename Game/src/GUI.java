@@ -2,6 +2,7 @@
 Currently on PRACTICE step
 ->  Following codes are ORIGINALLY from "http://unikys.tistory.com/178"
     with some modifications.
+->  From now(this commit), modification becomes larger, so no longer following codes from the site.
 */
 
 import javax.swing.*;
@@ -15,21 +16,21 @@ public class GUI extends JFrame {
     public GUI(){
         super("Event Firer");
 
-        setBounds(100,100,300,200);
+        setBounds(100,100,800,600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Container contentPane = this.getContentPane();
         JPanel pane = new JPanel();
         JButton buttonStart = new JButton("Start");
-        final JTextField textPeriod = new JTextField(5);
+        final JTextField textPeriod = new JTextField(10);
         JLabel labelPeriod = new JLabel("Input period: ");
-        JCheckBox checkboxIsRandom = new JCheckBox("Fire randomly");
+        JCheckBox flipFlop = new JCheckBox("Flip?");
 
-        checkboxIsRandom.addChangeListener(new ChangeListener() {
+        flipFlop.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 if(((JCheckBox)e.getSource()).isSelected()){
-                    textPeriod.setText("Random");
+                    textPeriod.setText("Flop?");
                     textPeriod.setEnabled(false);
                 }else{
                     textPeriod.setText("");
@@ -43,7 +44,7 @@ public class GUI extends JFrame {
         pane.add(buttonStart);
         pane.add(labelPeriod);
         pane.add(textPeriod);
-        pane.add(checkboxIsRandom);
+        pane.add(flipFlop);
         contentPane.add(pane);
 
         setVisible(true);
