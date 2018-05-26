@@ -2,6 +2,7 @@
     Studying with: "http://zetcode.com/tutorials/javagamestutorial/basics/"
 */
 import javax.swing.*;
+import java.awt.*;
 
 public class GUI extends JFrame {
 
@@ -10,12 +11,14 @@ public class GUI extends JFrame {
     }
 
     private void initUI() {
-        add(new _2D_Game_GUI_example());
+        this.add(new _2D_Game_GUI_example());
+        int width = 800, height = 600;
 
-        setSize(800, 600);
+        setBounds((this.getWidth()-width)/2,(this.getHeight()-height)/2,800,600);
 
-        setTitle("Donut");
+        setTitle("Halli-Galli");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setVisible(true);
     }
 }
