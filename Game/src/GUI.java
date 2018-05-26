@@ -14,7 +14,7 @@ public class GUI extends JFrame {
         this.add(new _2D_Game_GUI_example());
         int width = 800, height = 600;
 
-        setBounds((this.getWidth()-width)/2,(this.getHeight()-height)/2,800,600);
+        setSize(width,height);
 
         setTitle("Halli-Galli");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
