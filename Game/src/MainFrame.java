@@ -15,6 +15,12 @@ public class MainFrame extends JFrame{
 		/*Add panel to Frame*/
 		this.add(panel);
 		this.setVisible(true);
+
+		/*Card Class Test*/
+        Card test = new Card();
+
+        /*Card Class Test2: Testing image*/
+        Card test2 = new Card("Banana",1);
 	} 
 	
 	public static void main(String args[]){
