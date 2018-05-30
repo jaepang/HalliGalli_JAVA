@@ -1,0 +1,5 @@
+# For Disable Mac .DS_Store
+.DS_Store
+
+# For Disable InteliJ out folder
+out/
