@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import javax.swing.*;
 
 public class Bell extends JPanel{
@@ -31,7 +30,6 @@ public class Bell extends JPanel{
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.CENTER);
 	    this.add(label,BorderLayout.CENTER);
-
     }
 
 }
