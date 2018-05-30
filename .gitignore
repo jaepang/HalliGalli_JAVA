@@ -3,3 +3,6 @@
 
 # For Disable InteliJ out folder
 out/
+
+# idea1 xml file
+.idea/workspace.xml
