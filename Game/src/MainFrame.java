@@ -12,7 +12,7 @@ public class MainFrame extends JFrame{
 		this.setTitle("Halli-Galli");
 
         /*Add panel to Frame*/
-        this.add(panel);
+        this.add(panel, BorderLayout.CENTER);
 
         /* Set Boundary */
         panel.setBounds(0, 0, 800, 600);
@@ -23,24 +23,22 @@ public class MainFrame extends JFrame{
         bell.setBounds(0, 0, 800, 600);
 
 		/*Card Class Test*/
-        //Card test = new Card(); bell.add(test);
-        //test.setOpaque(true);
+        //Card test = new Card();
         //panel.setBounds(0, 0, 100, 100);
 
         /*Card Class Test2: Testing image*/
-        Card test2 = new Card("Banana",1);
-        test2.setOpaque(true);
-        panel.setBounds(0, 0, 100, 100);
+        //Card test2 = new Card("Banana",1);
+        //panel.setBounds(100, 100, 100, 100);
 
-        panel.add(bell, new Integer(0), 0);
+        panel.add(bell, new Integer(0));
         //panel.add(test, new Integer(1), 0);
-        panel.add(test2, new Integer(2), 0);
+        //panel.add(test2, new Integer(1));
         this.pack();
         this.setVisible(true);
 	} 
 	
 	public static void main(String args[]){
-		MainFrame mainFrame = new MainFrame();
+		new MainFrame();
 	}
 }
 

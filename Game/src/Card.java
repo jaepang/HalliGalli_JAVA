@@ -7,7 +7,6 @@ public class Card extends JPanel {
     private String fruit;
     Card(){
         super();
-        // WHy need cardPanel?
         //JPanel cardPanel = new JPanel();
     }
     Card(String type, int cnt){
@@ -16,7 +15,9 @@ public class Card extends JPanel {
         this.num = cnt;
         this.fruit = type;
         getCardImageIcon();
-        this.add(new JLabel(this.icon));
+        JLabel label = new JLabel();
+        label.setIcon(this.icon);
+        this.add(label);
         //displayImageIcon();
 
     }
@@ -40,6 +41,7 @@ public class Card extends JPanel {
                         this.icon = new ImageIcon(this.getClass().getResource("images/Banana/Banana_5.png"));
                         break;
                 }
+                break;
             case "Grapefruit":
                 switch (this.num) {
                     case 1:
@@ -58,6 +60,7 @@ public class Card extends JPanel {
                         this.icon = new ImageIcon(this.getClass().getResource("images/Grapefruit/Grapefruit_5.png"));
                         break;
                 }
+                break;
             case "Kiwi":
                 switch (this.num){
                     case 1:
@@ -76,6 +79,7 @@ public class Card extends JPanel {
                         this.icon = new ImageIcon(this.getClass().getResource("images/Kiwi/Kiwi_5.png"));
                         break;
                 }
+                break;
             case "Strawberry":
                 switch (this.num){
                     case 1:
@@ -94,6 +98,7 @@ public class Card extends JPanel {
                         this.icon = new ImageIcon(this.getClass().getResource("images/Strawberry/Strawberry_5.png"));
                         break;
                 }
+                break;
         }
     }
 }
