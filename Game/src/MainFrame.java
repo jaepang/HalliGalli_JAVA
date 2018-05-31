@@ -7,7 +7,8 @@ public class MainFrame extends JFrame{
 		int width, height;
 		width = 800;
 		height = 600;
-		this.setSize(width, height);
+		this.setPreferredSize(new Dimension(width, height));
+		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Halli-Galli");
 
@@ -27,12 +28,13 @@ public class MainFrame extends JFrame{
         //panel.setBounds(0, 0, 100, 100);
 
         /*Card Class Test2: Testing image*/
-        //Card test2 = new Card("Banana",1);
-        //panel.setBounds(100, 100, 100, 100);
+        Card test2 = new Card("Banana",1);
+        test2.setOpaque(true);
+        test2.setBounds(100, 100, 100, 100);
 
         panel.add(bell, new Integer(0));
         //panel.add(test, new Integer(1), 0);
-        //panel.add(test2, new Integer(1));
+        panel.add(test2, new Integer(1));
         this.pack();
         this.setVisible(true);
 	} 

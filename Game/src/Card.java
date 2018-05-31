@@ -29,7 +29,13 @@ public class Card extends JPanel {
                         this.icon = new ImageIcon(this.getClass().getResource("images/Banana/Banana_1.png"));
                         break;
                     case 2:
-                        this.icon = new ImageIcon(this.getClass().getResource("images/Banana/Banana_2.png"));
+                        try{
+                            this.icon = new ImageIcon(this.getClass().getResource("images/Banana/Banana_2.png"));
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
+                        //this.icon = new ImageIcon(this.getClass().getResource("images/Banana/Banana_2.png"));
                         break;
                     case 3:
                         this.icon = new ImageIcon(this.getClass().getResource("images/Banana/Banana_3.png"));
