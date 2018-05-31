@@ -24,8 +24,9 @@ public class MainFrame extends JFrame{
         bell.setBounds(0, 0, 800, 600);
 
 		/*Card Class Test*/
-        //Card test = new Card();
-        //panel.setBounds(0, 0, 100, 100);
+        Card test = new Card();
+        test.setOpaque(true);
+        test.setBounds(0, 0, 100, 100);
 
         /*Card Class Test2: Testing image*/
         Card test2 = new Card("Banana",1);
@@ -33,7 +34,7 @@ public class MainFrame extends JFrame{
         test2.setBounds(100, 100, 100, 100);
 
         panel.add(bell, new Integer(0));
-        //panel.add(test, new Integer(1), 0);
+        panel.add(test, new Integer(1));
         panel.add(test2, new Integer(1));
         this.pack();
         this.setVisible(true);
