@@ -7,19 +7,15 @@ public class Card extends JPanel {
     private String fruit;
     Card(){
         super();
-        //JPanel cardPanel = new JPanel();
     }
     Card(String type, int cnt){
         super();
-        //JPanel cardPanel = new JPanel();
         this.num = cnt;
         this.fruit = type;
         getCardImageIcon();
         JLabel label = new JLabel();
         label.setIcon(this.icon);
         this.add(label);
-        //displayImageIcon();
-
     }
     private void getCardImageIcon(){
         switch (this.fruit){
