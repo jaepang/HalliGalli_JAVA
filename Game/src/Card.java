@@ -19,6 +19,12 @@ public class Card extends JPanel {
         label.setIcon(this.icon);
         this.add(label);
     }
+    public String getFruit(){
+        return this.fruit;
+    }
+    public int getCnt(){
+        return this.num;
+    }
     private void getCardImageIcon(){
         switch (this.fruit){
             case "Banana":
