@@ -1,5 +1,5 @@
 import javax.swing.*;
-import java.awt.*;
+//import java.awt.*;
 
 public class Card extends JPanel {
     private ImageIcon icon = new ImageIcon(); // NEED TO INSERT "RELATIVE PATH" OF "CARD IMAGE"
@@ -7,6 +7,8 @@ public class Card extends JPanel {
     private String fruit;
     Card(){
         super();
+        this.num = 0;
+        this.fruit = null;
     }
     Card(String type, int cnt){
         super();
