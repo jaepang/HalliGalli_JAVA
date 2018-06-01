@@ -14,9 +14,13 @@ public class MainFrame extends JFrame{
         return false;
     }
 	public MainFrame() {
-		int width, height;
+		int width, height, card_width, card_height;
+		/* 4:3 resolution */
 		width = 800;
 		height = 600;
+		card_width = width/8;
+		card_height = height/6;
+
 		this.setPreferredSize(new Dimension(width, height));
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,17 +41,17 @@ public class MainFrame extends JFrame{
         Deck testDeck = new Deck();
         testDeck.createDeck();
         Card test = testDeck.getTopCard();
-        test.setBounds(0, 0, width/8, height/8);
+        test.setBounds(width/2 -card_width/2, height - card_height, card_width, card_height);
 
         /*Card Class Test2: Testing image*/
         Deck testDeck2 = new Deck();
         testDeck2.createDeck();
         Card test2 = testDeck2.getTopCard();
-        test2.setBounds(width/8, height/8, width/8, height/8);
+        test2.setBounds(width/2 -card_width/2, 0, card_width, card_height);
 
         base_pane.add(bell, new Integer(0));
         base_pane.add(test, new Integer(1), 0);
-        base_pane.add(test2, new Integer(1));
+        base_pane.add(test2, new Integer(1), 1);
         this.pack();
         this.setVisible(true);
 	} 
