@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.*;
 
-public class Deck extends Card{
+public class Deck {
     private ArrayList<Card> cards = new ArrayList<Card>();
     private Card topCard;
     Deck(){
@@ -21,25 +21,25 @@ public class Deck extends Card{
             switch (i){
                 case 0:
                     for(int j=0; j<14; j++){ //012 345 678 91011 1213
-                        Card card = new Card("Banana", j/3);
+                        Card card = new Card("Banana", j/3+1);
                         addCard(card);
                     }
                     break;
                 case 1:
                     for(int j=0; j<14; j++){ //012 345 678 91011 1213
-                        Card card = new Card("Grapefruit", j/3);
+                        Card card = new Card("Grapefruit", j/3+1);
                         addCard(card);
                     }
                     break;
                 case 2:
                     for(int j=0; j<14; j++){ //012 345 678 91011 1213
-                        Card card = new Card("Kiwi", j/3);
+                        Card card = new Card("Kiwi", j/3+1);
                         addCard(card);
                     }
                     break;
                 case 3:
                     for(int j=0; j<14; j++){ //012 345 678 91011 1213
-                        Card card = new Card("Strawberry", j/3);
+                        Card card = new Card("Strawberry", j/3+1);
                         addCard(card);
                     }
                     break;
