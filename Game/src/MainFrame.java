@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class MainFrame extends JFrame{
     private JLayeredPane base_pane = new JLayeredPane();
@@ -54,10 +56,21 @@ public class MainFrame extends JFrame{
         base_pane.add(test2, new Integer(1), 1);
         this.pack();
         this.setVisible(true);
+
+        /* Deck shuffle*/
+        /* Mouse click eventListener used for testing*/
+        test.addMouseListener(new MouseHandler());
+        /* Should be changed in future*/
+        test = testDeck.getTopCard();
+
+        this.setResizable(false);   // No frame resize occurs, except for future feature: Configure settings
 	} 
-	
+
 	public static void main(String args[]){
 		new MainFrame();
 	}
+
+
+
 }
 

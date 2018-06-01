@@ -1,19 +1,27 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.*;
 
 public class Deck {
     private ArrayList<Card> cards = new ArrayList<Card>();
     private Card topCard;
+    private Integer topIdx;
     Deck(){
         cards.clear();
         topCard = null;
+        topIdx = 0;
     }
     public void addCard(Card arg1){
         this.cards.add(arg1);
         topCard = arg1;
+        arg1.setDeck(this);
     }
     public Card getTopCard(){
         return this.topCard;
+    }
+    public void nextTopCard(){
+        this.topIdx = this.topIdx + 1;
+        topCard = this.cards.get(this.topIdx);
     }
     /* make deck and shuffle */
     public void createDeck(){
@@ -47,6 +55,6 @@ public class Deck {
         }
         long seed = System.nanoTime();
         Collections.shuffle(this.cards, new Random(seed));
-        this.topCard = this.cards.get(0);
+        this.topCard = this.cards.get(this.topIdx);
     }
 }

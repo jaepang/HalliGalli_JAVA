@@ -5,20 +5,28 @@ public class Card extends JPanel {
     private ImageIcon icon = new ImageIcon(); // NEED TO INSERT "RELATIVE PATH" OF "CARD IMAGE"
     private int num;
     private String fruit;
+    private Deck deck;
     Card(){
         super();
         this.num = 0;
         this.fruit = null;
+        this.deck = null;
     }
     Card(String type, int cnt){
         super();
         this.num = cnt;
         this.fruit = type;
+        this.deck = null;
         getCardImageIcon();
-
         JLabel label = new JLabel(); // set Image
         label.setIcon(this.icon);
         this.add(label);
+    }
+    public void setDeck(Deck input){
+        this.deck = input;
+    }
+    public Deck getDeck(){
+        return this.deck;
     }
     public String getFruit(){
         return this.fruit;
