@@ -15,7 +15,8 @@ public class Card extends JPanel {
         this.num = cnt;
         this.fruit = type;
         getCardImageIcon();
-        JLabel label = new JLabel();
+
+        JLabel label = new JLabel(); // set Image
         label.setIcon(this.icon);
         this.add(label);
     }
