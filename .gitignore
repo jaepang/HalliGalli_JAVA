@@ -5,4 +5,4 @@
 out/
 
 # idea1 xml file
-workspace.xml
+.idea/workspace.xml
