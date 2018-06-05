@@ -5,7 +5,7 @@ public class MouseHandler implements MouseListener {
     private int mouseIsEntered = 0;
     @Override
     public void mouseClicked(MouseEvent e){
-        if(mouseIsEntered == 1) {
+        if(this.mouseIsEntered == 1) {
             System.out.println("CLICKED");
             Card card = (Card) e.getSource();
             Deck deck = card.getDeck();

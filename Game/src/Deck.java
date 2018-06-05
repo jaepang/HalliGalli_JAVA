@@ -21,7 +21,7 @@ public class Deck {
     }
     public void nextTopCard(){
         this.topIdx = this.topIdx + 1;
-        topCard = this.cards.get(this.topIdx);
+        this.topCard = this.cards.get(this.topIdx);
     }
     /* make deck and shuffle */
     public void createDeck(){

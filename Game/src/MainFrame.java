@@ -7,6 +7,7 @@ public class MainFrame extends JFrame{
     private JLayeredPane base_pane = new JLayeredPane();
     /* Check whether it is time to ring the bell */
     /* When player gets more than 2, we may need ArrayList <Deck> */
+    /*
     public boolean Ringdingdong(Deck one, Deck two){
         if(one.getTopCard().getFruit() == two.getTopCard().getFruit()){
             if(one.getTopCard().getCnt()+two.getTopCard().getCnt() == 5){
@@ -15,6 +16,8 @@ public class MainFrame extends JFrame{
         }
         return false;
     }
+    */
+
 	public MainFrame() {
 		int width, height, card_width, card_height;
 		/* 4:3 resolution */
@@ -24,7 +27,7 @@ public class MainFrame extends JFrame{
 		card_height = height/6;
 
 		this.setPreferredSize(new Dimension(width, height));
-		this.setResizable(false);
+		this.setResizable(false);        // No frame resize occurs, except for future feature: Configure settings
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Halli-Galli");
 
@@ -62,13 +65,28 @@ public class MainFrame extends JFrame{
         test.addMouseListener(new MouseHandler());
         /* Should be changed in future*/
         test = testDeck.getTopCard();
-
-        this.setResizable(false);   // No frame resize occurs, except for future feature: Configure settings
 	} 
 
 	public static void main(String args[]){
-		new MainFrame();
-	}
+
+	    new MainFrame();
+
+	    /*Server Testing*/
+        /*Currently not working, cause might be: portNum is not appropriate, or ArrayList<Thread> issue.*/
+
+        Server server = new Server(5050);
+        new Thread(server).start();
+
+        try {
+            Thread.sleep(20*1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Stopping Server");
+        server.stop();
+
+    }
 
 
 
