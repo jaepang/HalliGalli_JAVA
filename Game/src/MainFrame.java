@@ -3,8 +3,10 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class MainFrame extends JFrame{
+public class MainFrame extends JFrame implements MouseListener{
     private JLayeredPane base_pane = new JLayeredPane();
+    int width, height, card_width, card_height;
+    Card card1, card2;
     /* Check whether it is time to ring the bell */
     /* When player gets more than 2, we may need ArrayList <Deck> */
     /*
@@ -17,9 +19,7 @@ public class MainFrame extends JFrame{
         return false;
     }
     */
-
 	public MainFrame() {
-		int width, height, card_width, card_height;
 		/* 4:3 resolution */
 		width = 800;
 		height = 600;
@@ -42,43 +42,68 @@ public class MainFrame extends JFrame{
         bell.setOpaque(true);
         bell.setBounds(0, 0, width, height);
 
-		/*Deck Class Test*/
+		/*Deck Class this.card1*/
         Deck deck1 = new Deck();
         deck1.createDeck();
-        Card test = deck1.getTopCard();
-        test.setBounds(width/2 -card_width/2, height - card_height, card_width, card_height);
+        this.card1 = deck1.getTopCard();
+        card1.setBounds(width/2 -card_width/2, height - card_height, card_width, card_height);
 
-        /*Card Class Test2: Testing image*/
+        /*Card Class this.card2: this.card1ing image*/
         Deck deck2 = new Deck();
         deck2.createDeck();
-        Card test2 = deck2.getTopCard();
-        test2.setBounds(width/2 -card_width/2, 0, card_width, card_height);
+        this.card2 = deck2.getTopCard();
+        this.card2.setBounds(width/2 -card_width/2, 0, card_width, card_height);
 
         base_pane.add(bell, new Integer(0));
-        base_pane.add(test, new Integer(1), 0);
-        base_pane.add(test2, new Integer(1), 1);
+        base_pane.add(this.card1, new Integer(1), 0);
+        base_pane.add(this.card2, new Integer(1), 1);
         this.pack();
         this.setVisible(true);
 
-        /* Mouse click eventListener used for testing*/
-        test.addMouseListener(new MouseHandler());
-        base_pane.remove(0);
-        /* Should be changed in future*/
-        test = deck1.getTopCard();
-        test.setBounds(width/2 -card_width/2, height - card_height, card_width, card_height);
-        base_pane.add(test, new Integer(1), 0);
+        /* Mouse click eventListener used for this.card1ing*/
+        this.card1.addMouseListener(this);
 
-        System.out.println(test.getFruit()+" "+test.getCnt());
-        this.revalidate();
-        base_pane.revalidate();
-        base_pane.repaint();
-	} 
+        //base_pane.remove(0);
+        /* Should be changed in future*/
+        this.card1 = deck1.getTopCard();
+
+
+        //System.out.println(this.card1.getFruit()+" "+this.card1.getCnt());
+	}
+    private int mouseIsEntered = 0;
+    @Override
+    public void mouseClicked(MouseEvent e){
+        if(this.mouseIsEntered == 1) {
+            System.out.println("CLICKED");
+            this.card1.getDeck().nextTopCard();
+            this.card1.setCard(this.card1.getDeck().getTopCard());
+            
+            base_pane.revalidate();
+            base_pane.repaint();
+        }
+    }
+    @Override
+    public void mouseEntered(MouseEvent e){
+        this.mouseIsEntered = 1;
+    }
+    @Override
+    public void mouseExited(MouseEvent e){
+        this.mouseIsEntered = 0;
+    }
+    @Override
+    public void mousePressed(MouseEvent e){
+
+    }
+    @Override
+    public void mouseReleased(MouseEvent e){
+
+    }
 
 	public static void main(String args[]){
 
 	    new MainFrame();
 
-	    /*Server Testing*/
+	    /*Server testing*/
         /*Currently not working, cause might be: portNum is not appropriate, or ArrayList<Thread> issue.*/
 
         Server server = new Server(5050);
