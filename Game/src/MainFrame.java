@@ -43,15 +43,15 @@ public class MainFrame extends JFrame{
         bell.setBounds(0, 0, width, height);
 
 		/*Deck Class Test*/
-        Deck testDeck = new Deck();
-        testDeck.createDeck();
-        Card test = testDeck.getTopCard();
+        Deck deck1 = new Deck();
+        deck1.createDeck();
+        Card test = deck1.getTopCard();
         test.setBounds(width/2 -card_width/2, height - card_height, card_width, card_height);
 
         /*Card Class Test2: Testing image*/
-        Deck testDeck2 = new Deck();
-        testDeck2.createDeck();
-        Card test2 = testDeck2.getTopCard();
+        Deck deck2 = new Deck();
+        deck2.createDeck();
+        Card test2 = deck2.getTopCard();
         test2.setBounds(width/2 -card_width/2, 0, card_width, card_height);
 
         base_pane.add(bell, new Integer(0));
@@ -60,11 +60,18 @@ public class MainFrame extends JFrame{
         this.pack();
         this.setVisible(true);
 
-        /* Deck shuffle*/
         /* Mouse click eventListener used for testing*/
         test.addMouseListener(new MouseHandler());
+        base_pane.remove(0);
         /* Should be changed in future*/
-        test = testDeck.getTopCard();
+        test = deck1.getTopCard();
+        test.setBounds(width/2 -card_width/2, height - card_height, card_width, card_height);
+        base_pane.add(test, new Integer(1), 0);
+
+        System.out.println(test.getFruit()+" "+test.getCnt());
+        this.revalidate();
+        base_pane.revalidate();
+        base_pane.repaint();
 	} 
 
 	public static void main(String args[]){
