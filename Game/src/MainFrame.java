@@ -66,18 +66,13 @@ public class MainFrame extends JFrame implements MouseListener{
         this.card1.addMouseListener(this);
         bell.getLabel().addMouseListener(this);
 
-        //base_pane.remove(0);
-        /* Should be changed in future*/
         this.card1 = deck1.getTopCard();
-
-
-        //System.out.println(this.card1.getFruit()+" "+this.card1.getCnt());
 	}
     private int mouseIsEntered = 0;
     @Override
     public void mouseClicked(MouseEvent e){
         if(this.mouseIsEntered == 1 && e.getSource()==card1) {
-            System.out.println("CLICKED");
+            System.out.println("CLICKED CARD");
             this.card1.getDeck().nextTopCard();
             this.card1.setCard(this.card1.getDeck().getTopCard());
 

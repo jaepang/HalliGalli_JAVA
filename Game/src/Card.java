@@ -1,5 +1,4 @@
 import javax.swing.*;
-//import java.awt.*;
 
 public class Card extends JLabel {
     private ImageIcon icon = new ImageIcon(); // NEED TO INSERT "RELATIVE PATH" OF "CARD IMAGE"

@@ -1,5 +1,3 @@
-import javax.swing.*;
-import java.util.ArrayList;
 import java.util.*;
 
 public class Deck {
@@ -17,7 +15,6 @@ public class Deck {
         topCard = arg1;
         arg1.setDeck(this);
     }
-    /* Treat blank deck back; to display empty deck */
     public Card getTopCard(){
         return this.topCard;
     }
@@ -69,6 +66,8 @@ public class Deck {
         for(int i=0; i<this.cards.size(); i++){
             cards.get(i).setDeck(this);
         }
+
+        /* Shuffle Deck After merging */
         long seed = System.nanoTime();
         Collections.shuffle(this.cards, new Random(seed));
         /* clear a deck */
