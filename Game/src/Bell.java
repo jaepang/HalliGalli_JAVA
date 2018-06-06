@@ -2,6 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Bell extends JPanel{
+    JLabel label = new JLabel();
 	Bell(){
 		super();
 		// Set Layout: BorderLayout.
@@ -24,12 +25,13 @@ public class Bell extends JPanel{
 	     */
 
 	    // Make Bell as JLabel.
-	    JLabel label = new JLabel();
-	    label.setIcon(icon);
+	    this.label.setIcon(icon);
 	    // Set position: CENTER.
-        label.setHorizontalAlignment(JLabel.CENTER);
-        label.setVerticalAlignment(JLabel.CENTER);
+        this.label.setHorizontalAlignment(JLabel.CENTER);
+        this.label.setVerticalAlignment(JLabel.CENTER);
 	    this.add(label,BorderLayout.CENTER);
     }
-
+    public JLabel getLabel(){
+	    return this.label;
+    }
 }

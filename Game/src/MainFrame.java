@@ -2,11 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.*;
 
 public class MainFrame extends JFrame implements MouseListener{
     private JLayeredPane base_pane = new JLayeredPane();
-    int width, height, card_width, card_height;
+    Bell bell = new Bell();
     Card card1, card2;
+    ArrayList <Long> ringBellLog = new ArrayList<Long>();
     /* Check whether it is time to ring the bell */
     /* When player gets more than 2, we may need ArrayList <Deck> */
     /*
@@ -20,6 +22,7 @@ public class MainFrame extends JFrame implements MouseListener{
     }
     */
 	public MainFrame() {
+        int width, height, card_width, card_height;
 		/* 4:3 resolution */
 		width = 800;
 		height = 600;
@@ -38,7 +41,6 @@ public class MainFrame extends JFrame implements MouseListener{
         base_pane.setBounds(0, 0, width, height);
 
 		/*Create "Bell" bell Instance*/
-		Bell bell = new Bell();
         bell.setOpaque(true);
         bell.setBounds(0, 0, width, height);
 
@@ -62,6 +64,7 @@ public class MainFrame extends JFrame implements MouseListener{
 
         /* Mouse click eventListener used for this.card1ing*/
         this.card1.addMouseListener(this);
+        bell.getLabel().addMouseListener(this);
 
         //base_pane.remove(0);
         /* Should be changed in future*/
@@ -73,13 +76,20 @@ public class MainFrame extends JFrame implements MouseListener{
     private int mouseIsEntered = 0;
     @Override
     public void mouseClicked(MouseEvent e){
-        if(this.mouseIsEntered == 1) {
+        if(this.mouseIsEntered == 1 && e.getSource()==card1) {
             System.out.println("CLICKED");
             this.card1.getDeck().nextTopCard();
             this.card1.setCard(this.card1.getDeck().getTopCard());
-            
+
             base_pane.revalidate();
             base_pane.repaint();
+        }
+        else if(this.mouseIsEntered == 1 && e.getSource() == bell.getLabel()){
+            ringBellLog.add(System.currentTimeMillis());
+            for(int i=0; i<ringBellLog.size(); i++){
+                System.out.print(ringBellLog.get(i)+" ");
+            }
+            System.out.println();
         }
     }
     @Override
