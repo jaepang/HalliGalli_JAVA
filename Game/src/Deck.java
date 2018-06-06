@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Deck {
     private ArrayList<Card> cards = new ArrayList<Card>();
+    private Integer size;
     private Card topCard;
     private Integer topIdx;
     Deck(){
@@ -16,8 +17,13 @@ public class Deck {
         topCard = arg1;
         arg1.setDeck(this);
     }
+    /* Treat blank deck back; to display empty deck */
     public Card getTopCard(){
         return this.topCard;
+    }
+    public int getSize(){
+        this.size = this.cards.size();
+        return this.size;
     }
     public void nextTopCard(){
         this.topIdx = this.topIdx + 1;
@@ -56,5 +62,16 @@ public class Deck {
         long seed = System.nanoTime();
         Collections.shuffle(this.cards, new Random(seed));
         this.topCard = this.cards.get(this.topIdx);
+    }
+    /* Merge two deck to one */
+    public void MergeDeck(Deck deck){
+        this.cards.addAll(deck.cards);
+        for(int i=0; i<this.cards.size(); i++){
+            cards.get(i).setDeck(this);
+        }
+        long seed = System.nanoTime();
+        Collections.shuffle(this.cards, new Random(seed));
+        /* clear a deck */
+        deck = new Deck();
     }
 }

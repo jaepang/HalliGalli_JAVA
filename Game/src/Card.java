@@ -1,7 +1,7 @@
 import javax.swing.*;
 //import java.awt.*;
 
-public class Card extends JPanel {
+public class Card extends JLabel {
     private ImageIcon icon = new ImageIcon(); // NEED TO INSERT "RELATIVE PATH" OF "CARD IMAGE"
     private int num;
     private String fruit;
@@ -18,9 +18,7 @@ public class Card extends JPanel {
         this.fruit = type;
         this.deck = null;
         getCardImageIcon();
-        JLabel label = new JLabel(); // set Image
-        label.setIcon(this.icon);
-        this.add(label);
+        this.setIcon(this.icon);
     }
     public void setDeck(Deck input){
         this.deck = input;
@@ -33,6 +31,14 @@ public class Card extends JPanel {
     }
     public int getCnt(){
         return this.num;
+    }
+    public ImageIcon getIcon(){
+        return this.icon;
+    }
+    public void setCard(Card input){
+        this.fruit = input.fruit;
+        this.num = input.num;
+        this.icon = input.icon;
     }
     private void getCardImageIcon(){
         switch (this.fruit){
