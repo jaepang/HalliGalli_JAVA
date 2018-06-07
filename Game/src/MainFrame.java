@@ -35,10 +35,10 @@ public class MainFrame extends JFrame implements MouseListener{
 		this.setTitle("Halli-Galli");
 
         /*Add base_pane to Frame*/
-        this.add(base_pane, BorderLayout.CENTER);
+        this.add(this.base_pane, BorderLayout.CENTER);
 
         /* Set Boundary */
-        base_pane.setBounds(0, 0, width, height);
+        this.base_pane.setBounds(0, 0, width, height);
 
 		/*Create "Bell" bell Instance*/
         bell.setOpaque(true);
@@ -64,7 +64,7 @@ public class MainFrame extends JFrame implements MouseListener{
 
         /* Mouse click eventListener used for this.card1ing*/
         this.card1.addMouseListener(this);
-        bell.getLabel().addMouseListener(this);
+        this.bell.getLabel().addMouseListener(this);
 
         this.card1 = deck1.getTopCard();
 	}
@@ -79,7 +79,7 @@ public class MainFrame extends JFrame implements MouseListener{
             base_pane.revalidate();
             base_pane.repaint();
         }
-        else if(this.mouseIsEntered == 1 && e.getSource() == bell.getLabel()){
+        else if(this.mouseIsEntered == 1 && e.getSource() == this.bell.getLabel()){
             ringBellLog.add(System.currentTimeMillis());
             for(int i=0; i<ringBellLog.size(); i++){
                 System.out.print(ringBellLog.get(i)+" ");

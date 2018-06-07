@@ -5,8 +5,9 @@ public class Bell extends JPanel{
     JLabel label = new JLabel();
 	Bell(){
 		super();
-		// Set Layout: BorderLayout.
-		this.setLayout(new BorderLayout());
+		// Set Layout: null; BorderLayout has problem, when add one label, it contain all whitespace
+        this.setLayout(null);
+
 		// Background: Pink
 		this.setBackground(Color.PINK);
 		// Load Bell image.
@@ -27,9 +28,9 @@ public class Bell extends JPanel{
 	    // Make Bell as JLabel.
 	    this.label.setIcon(icon);
 	    // Set position: CENTER.
-        this.label.setHorizontalAlignment(JLabel.CENTER);
-        this.label.setVerticalAlignment(JLabel.CENTER);
-	    this.add(label,BorderLayout.CENTER);
+        this.label.setLocation(350, 250);
+        this.label.setSize(100, 100);
+	    this.add(label);
     }
     public JLabel getLabel(){
 	    return this.label;
