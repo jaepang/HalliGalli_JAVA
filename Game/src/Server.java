@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Server implements Runnable{
     private int portNum;
-    private ArrayList<Thread> runningThreads;
+    private ArrayList<Thread> runningThreads = new ArrayList<Thread>();
     private ServerSocket serverSocket;
     private boolean isStopped;
 
