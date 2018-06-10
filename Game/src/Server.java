@@ -1,72 +1,51 @@
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class Server implements Runnable{
-    private int portNum;
-    private ArrayList<Thread> runningThreads = new ArrayList<Thread>();
-    private ServerSocket serverSocket;
-    private boolean isStopped;
-
-    public Server(){
-        this.portNum = 0000;
-        this.runningThreads.clear();
-        this.serverSocket = null;
-        this.isStopped = true;
+    int clientNum = 0;
+    ServerSocket ss = null;
+    Server(){
+        this.clientNum = 0;
+        try {
+            this.ss = new ServerSocket(5000);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
-    public Server(int port){
-        this.portNum = port;
-        this.runningThreads.clear();
-        this.serverSocket = null;
-        this.isStopped = true;
+    Server(int portNum){
+        this.clientNum = 0;
+        try {
+            this.ss = new ServerSocket(portNum);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void run(){
-        synchronized (this){
-            this.runningThreads.add(Thread.currentThread());
-        }
-        openServerSocket();
-        while(! isStopped()){
-            Socket clientSocket = null;
+        while(true){
+            if(this.clientNum >= 2) break;
+            Socket soc = null;
             try {
-                clientSocket = this.serverSocket.accept();
+                soc = ss.accept();
+
+                OutputStream out = soc.getOutputStream();
+                DataOutputStream dos = new DataOutputStream(out);
+
+                dos.writeUTF("message from server");
+
+                dos.close();
+                out.close();
+                soc.close();
             } catch (IOException e) {
-                if(isStopped()){
-                    System.out.println("Server Stopped.");
-                    return;
-                }
-                throw new RuntimeException(
-                        "Error accepting client connection", e);
+                e.printStackTrace();
             }
-            new Thread(
-                    new Client(
-                            clientSocket, "Multithreaded Server")
-            ).start();
         }
-        System.out.println("Server Stopped.");
+
+        System.out.println("clientNum >= 2");
     }
 
-    private void openServerSocket(){
-        try {
-            this.serverSocket = new ServerSocket(this.portNum);
-        } catch (IOException e) {
-            throw new RuntimeException("Cannot open port "+ this.portNum, e);
-        }
-    }
-
-    private synchronized boolean isStopped(){
-        return this.isStopped;
-    }
-
-    public synchronized void stop(){
-        this.isStopped = true;
-        try {
-            this.serverSocket.close();
-        } catch (IOException e) {
-            throw new RuntimeException("Error closing server", e);
-        }
-    }
 }

@@ -121,7 +121,6 @@ public class MainFrame extends JFrame implements MouseListener{
         }
 
         System.out.println("Stopping Server");
-        server.stop();
 
     }
 
