@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Deck {
+public class Deck implements Serializable {
     private ArrayList<Card> cards = new ArrayList<Card>();
     private Integer size;
     private Card topCard;

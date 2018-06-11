@@ -116,7 +116,7 @@ public class MainFrame extends JFrame implements MouseListener{
 
         System.out.println("Server sleeping begin...");
         try {
-            Thread.sleep(20*1000);
+            Thread.sleep(2*1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -1,11 +1,10 @@
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server implements Runnable{
-    int clientNum = 0;
+    private int clientNum = 0;
+    private Card topCard = null; // Temporally used; for checking object interchange
     ServerSocket ss = null;
     Server(){
         this.clientNum = 0;
@@ -34,16 +33,29 @@ public class Server implements Runnable{
             Socket soc = null;
             try {
                 soc = ss.accept();
+
+
+                System.out.println("New client socket arrived");
                 this.clientNum++;
                 OutputStream out = soc.getOutputStream();
                 DataOutputStream dos = new DataOutputStream(out);
 
                 dos.writeUTF("message from server");
 
+                InputStream in = soc.getInputStream();
+                ObjectInputStream ois = new ObjectInputStream(in);
+
+                this.topCard = (Card)ois.readObject();
+                System.out.println("This topcard's fruit:"+this.topCard.getFruit());
+
                 dos.close();
                 out.close();
+                ois.close();
+                in.close();
                 soc.close();
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }

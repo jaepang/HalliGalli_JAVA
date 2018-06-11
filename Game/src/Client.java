@@ -1,12 +1,15 @@
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class Client implements Runnable{
-    String serverIP = "localhost";
-    Socket soc = null;
+    private String serverIP = "localhost";
+    private Socket soc = null;
+    private Card topCard = null;
+    private Deck deck = null;
     Client(){
+        this.deck = new Deck();
+        this.deck.createDeck();
+        this.topCard = this.deck.getTopCard();
     }
 
     @Override
@@ -21,7 +24,16 @@ public class Client implements Runnable{
 
 
             System.out.println("Client closing....");
+
+
+            OutputStream out = soc.getOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(out);
+
+            oos.writeObject(this.topCard);
             dis.close();
+            in.close();
+            oos.close();
+            out.close();
             soc.close();
 
         } catch (IOException e) {

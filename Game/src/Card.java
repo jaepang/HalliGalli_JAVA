@@ -1,6 +1,7 @@
 import javax.swing.*;
+import java.io.Serializable;
 
-public class Card extends JLabel {
+public class Card extends JLabel implements Serializable{
     private ImageIcon icon = new ImageIcon(); // NEED TO INSERT "RELATIVE PATH" OF "CARD IMAGE"
     private int num;
     private String fruit;
