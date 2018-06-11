@@ -9,22 +9,35 @@ public class Deck {
         cards.clear();
         topCard = null;
         topIdx = 0;
+        size = 0;
     }
     public void addCard(Card arg1){
         this.cards.add(arg1);
         topCard = arg1;
         arg1.setDeck(this);
+        this.size ++;
+    }
+    public void removeCard(){
+        this.cards.remove(this.getTopIdx());
+        this.topIdx --;
     }
     public Card getTopCard(){
         return this.topCard;
     }
+    public int getTopIdx() {
+        return this.topIdx;
+    }
     public int getSize(){
-        this.size = this.cards.size();
         return this.size;
     }
     public void nextTopCard(){
         this.topIdx = this.topIdx + 1;
-        this.topCard = this.cards.get(this.topIdx);
+        try {
+            this.topCard = this.cards.get(this.topIdx);
+            this.size --;
+        } catch(IndexOutOfBoundsException e){
+            System.out.println("Player1 Lose; Lost every card");
+        }
     }
     /* make deck and shuffle */
     public void createDeck(){
@@ -61,16 +74,18 @@ public class Deck {
         this.topCard = this.cards.get(this.topIdx);
     }
     /* Merge two deck to one */
+    /* when player1 win, run this method */
     public void MergeDeck(Deck deck){
-        this.cards.addAll(deck.cards);
-        for(int i=0; i<this.cards.size(); i++){
-            cards.get(i).setDeck(this);
+        for(int i=0; i<deck.getTopIdx()+1; i++){
+            Card swapCard = deck.cards.get(i);
+            swapCard.setDeck(this);
+            this.cards.add(swapCard);
         }
-
+        for(int i=0; i<deck.getTopIdx()+1; i++){
+            deck.removeCard();
+        }
         /* Shuffle Deck After merging */
         long seed = System.nanoTime();
         Collections.shuffle(this.cards, new Random(seed));
-        /* clear a deck */
-        deck = new Deck();
     }
 }
