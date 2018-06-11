@@ -14,6 +14,10 @@ public class Client implements Runnable{
 
     @Override
     public void run(){
+        this.acceptServer();
+    }
+
+    private synchronized boolean acceptServer(){
         try {
             soc = new Socket(serverIP, 5000);
 
@@ -29,7 +33,7 @@ public class Client implements Runnable{
             OutputStream out = soc.getOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(out);
 
-            oos.writeObject(this.topCard);
+            oos.writeObject(topCard);
             dis.close();
             in.close();
             oos.close();
@@ -38,6 +42,8 @@ public class Client implements Runnable{
 
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 }
