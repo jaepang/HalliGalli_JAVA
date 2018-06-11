@@ -130,6 +130,9 @@ public class MainFrame extends JFrame implements MouseListener{
         System.out.println("client_2.start()");
         new Thread(client_2).start();
 
+        /*
+        * Client_3 should not be accepted
+        */
         Client client_3 = new Client();
         System.out.println("client_3.start()");
         new Thread(client_3).start();
