@@ -111,16 +111,28 @@ public class MainFrame extends JFrame implements MouseListener{
 	    /*Server testing*/
         /*Currently not working, cause might be: portNum is not appropriate, or ArrayList<Thread> issue.*/
 
-        Server server = new Server(5050);
+        Server server = new Server(5000);
         new Thread(server).start();
 
+        System.out.println("Server sleeping begin...");
         try {
             Thread.sleep(20*1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("Server starts making clients");
 
-        System.out.println("Stopping Server");
+        Client client_1 = new Client();
+        System.out.println("client_1.start()");
+        new Thread(client_1).start();
+
+        Client client_2 = new Client();
+        System.out.println("client_2.start()");
+        new Thread(client_2).start();
+
+        Client client_3 = new Client();
+        System.out.println("client_3.start()");
+        new Thread(client_3).start();
 
     }
 

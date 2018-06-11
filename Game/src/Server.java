@@ -27,11 +27,14 @@ public class Server implements Runnable{
     @Override
     public void run(){
         while(true){
-            if(this.clientNum >= 2) break;
+            if(this.clientNum >= 2){
+                System.out.println("clientNum >= 2, break");
+                break;
+            }
             Socket soc = null;
             try {
                 soc = ss.accept();
-
+                this.clientNum++;
                 OutputStream out = soc.getOutputStream();
                 DataOutputStream dos = new DataOutputStream(out);
 
