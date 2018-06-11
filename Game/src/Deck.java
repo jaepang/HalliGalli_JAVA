@@ -24,7 +24,11 @@ public class Deck {
     }
     public void nextTopCard(){
         this.topIdx = this.topIdx + 1;
-        this.topCard = this.cards.get(this.topIdx);
+        try {
+            this.topCard = this.cards.get(this.topIdx);
+        } catch(IndexOutOfBoundsException e){
+            System.out.println("Player1 Lose; Lost every card");
+        }
     }
     /* make deck and shuffle */
     public void createDeck(){
