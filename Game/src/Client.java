@@ -19,26 +19,19 @@ public class Client implements Runnable{
     @Override
     public void run(){
         this.acceptServer();
+
     }
 
     private synchronized boolean acceptServer(){
         try {
             soc = new Socket(serverIP, 5000);
-
             InputStream in = soc.getInputStream();
             DataInputStream dis = new DataInputStream(in);
 
             System.out.println(dis.readUTF());
 
-
             System.out.println("Client closing....");
-            synchronized (this) {
-                if (!sentClientTopCard(soc)) {
-                    notify();
-                    return false;
-                }
-                notify();
-            }
+
             //dis.close();
             //in.close();
 
@@ -51,19 +44,4 @@ public class Client implements Runnable{
         return true;
     }
 
-    private synchronized boolean sentClientTopCard(Socket soc){
-        OutputStream out = null;
-        try {
-            out = soc.getOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(out);
-            if(this.topCard != null) oos.writeObject(this.topCard);
-            else{
-                return false;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
 }

@@ -34,7 +34,7 @@ public class Server implements Runnable{
         System.out.println("closing Server..");
     }
 
-    private boolean acceptClient(){
+    private synchronized boolean acceptClient(){
 
         if(this.clientNum >= 2){
             System.out.println("clientNum >= 2, break");
@@ -50,11 +50,8 @@ public class Server implements Runnable{
             DataOutputStream dos = new DataOutputStream(out);
 
             dos.writeUTF("message from server");
-
+            dos.flush();
             this.clientNum++;
-
-            if(!this.getClientTopCard(soc)) return false;
-
             //dos.close();
             //out.close();
         } catch (IOException e) {
@@ -62,26 +59,5 @@ public class Server implements Runnable{
             return false;
         }
         return true;
-    }
-    private synchronized boolean getClientTopCard(Socket soc){
-        InputStream in = null;
-        try {
-            in = soc.getInputStream();
-            ObjectInputStream ois = new ObjectInputStream(in);
-            Object o = ois.readObject();
-            if(o != null){
-                this.topCard = (Card)o;
-                return true;
-            }else{
-                System.out.println("NULL OBJECT!");
-                return false;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 }
