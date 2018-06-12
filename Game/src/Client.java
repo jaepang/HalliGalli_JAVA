@@ -32,14 +32,34 @@ public class Client implements Runnable{
 
 
             System.out.println("Client closing....");
-
-
-            notify();
-            dis.close();
-            in.close();
+            synchronized (this) {
+                if (!sentClientTopCard(soc)) {
+                    notify();
+                    return false;
+                }
+                notify();
+            }
+            //dis.close();
+            //in.close();
 
             //soc.close();
 
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    private synchronized boolean sentClientTopCard(Socket soc){
+        OutputStream out = null;
+        try {
+            out = soc.getOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(out);
+            if(this.topCard != null) oos.writeObject(this.topCard);
+            else{
+                return false;
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return false;

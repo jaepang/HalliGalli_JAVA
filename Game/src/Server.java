@@ -53,12 +53,35 @@ public class Server implements Runnable{
 
             this.clientNum++;
 
-            dos.close();
-            out.close();
+            if(!this.getClientTopCard(soc)) return false;
+
+            //dos.close();
+            //out.close();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
         return true;
+    }
+    private synchronized boolean getClientTopCard(Socket soc){
+        InputStream in = null;
+        try {
+            in = soc.getInputStream();
+            ObjectInputStream ois = new ObjectInputStream(in);
+            Object o = ois.readObject();
+            if(o != null){
+                this.topCard = (Card)o;
+                return true;
+            }else{
+                System.out.println("NULL OBJECT!");
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
