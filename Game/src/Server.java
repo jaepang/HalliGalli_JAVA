@@ -74,6 +74,7 @@ public class Server implements Runnable{
         long clientBellTime = 0;
         Socket displaySoc = null;
         try {
+
             displaySoc = ss.accept();
             InputStream is = displaySoc.getInputStream();
             DataInputStream dis = new DataInputStream(is);
@@ -82,6 +83,7 @@ public class Server implements Runnable{
             if(timeDifference < 0){
                 timeDifference = -timeDifference;
             }
+            System.out.println("FUCK");
             return timeDifference;
         } catch (IOException e) {
             //e.printStackTrace();
@@ -99,6 +101,7 @@ public class Server implements Runnable{
             return isPlayerEmpty;
         } catch (IOException e) {
             System.out.println("Read Boolean error");
+            return true;
         }
     }
 }

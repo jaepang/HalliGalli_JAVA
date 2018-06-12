@@ -21,7 +21,7 @@ public class Display extends JFrame implements MouseListener{
     private Card card_1, card_2;
     private Deck deck_1, deck_2;
     private Client client = null;
-
+    private boolean isFiveCondition = false;
     public Display(Deck deck1, Deck deck2) {
         int width, height, card_width, card_height;
         /* 4:3 resolution */
@@ -107,6 +107,7 @@ public class Display extends JFrame implements MouseListener{
                 break;
         }
         /* update */
+        this.isFive();
         base_pane.revalidate();
         base_pane.repaint();
     }
@@ -118,7 +119,7 @@ public class Display extends JFrame implements MouseListener{
             this.flipAndUpdate(1);
         }
         else if(this.mouseIsEntered == 1 && e.getSource() == this.bell.getLabel()){
-            sendServerObject(System.currentTimeMillis());
+            //sendServerObject(System.currentTimeMillis());
         }
     }
     @Override
@@ -142,7 +143,7 @@ public class Display extends JFrame implements MouseListener{
         this.client = client;
     }
 
-    public void sendServerObject(Object o){
+    public synchronized void sendServerObject(Object o){
         //Socket soc = client.getSoc();
         try {
             Socket soc = new Socket("localhost",5000);
@@ -156,5 +157,18 @@ public class Display extends JFrame implements MouseListener{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isFive(){
+        if(this.card_1.getFruit() == this.card_2.getFruit()){
+            if(this.card_1.getCnt() + this.card_2.getCnt() == 5){
+                this.isFiveCondition = true;
+                return true;
+            }
+            this.isFiveCondition = false;
+            return false;
+        }
+        this.isFiveCondition = false;
+        return false;
     }
 }
