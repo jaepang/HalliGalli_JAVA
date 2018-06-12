@@ -3,12 +3,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server implements Runnable{
-    private int clientNum = 0;
-    private Deck oppoDeck = new Deck();
-    private Card topCard = null; // Temporally used; for checking object interchange
+    private Opponent oppo = new Opponent();
     ServerSocket ss = null;
     Server(){
-        this.clientNum = 0;
         try {
             this.ss = new ServerSocket(5000);
         } catch (IOException e) {
@@ -16,7 +13,6 @@ public class Server implements Runnable{
         }
     }
     Server(int portNum){
-        this.clientNum = 0;
         try {
             this.ss = new ServerSocket(portNum);
         } catch (IOException e) {
@@ -36,28 +32,20 @@ public class Server implements Runnable{
     }
 
     private synchronized boolean acceptClient(){
-
-        if(this.clientNum >= 2){
-            System.out.println("clientNum >= 2, break");
-            return false;
-        }
-
         Socket soc = null;
         try {
-            this.oppoDeck.createDeck();
-            this.topCard = this.oppoDeck.getTopCard();
             soc = ss.accept();
 
             System.out.println("New client socket arrived");
+            this.oppo = new Opponent();
             OutputStream out = soc.getOutputStream();
             DataOutputStream dos = new DataOutputStream(out);
             ObjectOutputStream oos = new ObjectOutputStream(out);
-            oos.writeObject(this.oppoDeck);
+            oos.writeObject(this.oppo.getOppoDeck());
             oos.flush();
 
             dos.writeUTF("message from server");
             dos.flush();
-            this.clientNum++;
             //dos.close();
             //out.close();
         } catch (IOException e) {
@@ -66,4 +54,22 @@ public class Server implements Runnable{
         }
         return true;
     }
+}
+
+class Opponent implements Serializable{
+    private Deck oppoDeck = new Deck();
+    private Card topCard = null; // Temporally used; for checking object interchange
+
+    Opponent(){
+        this.oppoDeck = new Deck();
+        this.oppoDeck.createDeck();
+        this.topCard = this.oppoDeck.getTopCard();
+    }
+
+    public Deck getOppoDeck(){
+        return this.oppoDeck;
+    }
+
+
+
 }

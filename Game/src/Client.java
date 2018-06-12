@@ -35,10 +35,16 @@ public class Client implements Runnable{
                 this.oppoDeck = (Deck) ois.readObject();
             } catch(ClassNotFoundException e){
                 System.out.println("Deck Class Not Found");
+                Thread.yield();
+                try {
+                    this.oppoDeck = (Deck) ois.readObject();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
             }
             this.oppoTopCard = this.oppoDeck.getTopCard();
             System.out.println(dis.readUTF());
-
+            System.out.println("Fruit:"+this.oppoTopCard.getFruit());
             System.out.println("Client closing....");
 
             //dis.close();
