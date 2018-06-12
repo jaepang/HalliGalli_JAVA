@@ -120,12 +120,18 @@ public class Display extends JFrame implements MouseListener{
     public void mouseClicked(MouseEvent e){
         if(this.mouseIsEntered == 1 && e.getSource()==card_1) {
             System.out.println("CLICKED CARD");
-            if(this.server.isPCTurn) {
+            if(this.server.isPlayerTurn) {
                 this.flipAndUpdate(1);
+                try {
+                    Thread.sleep(100);
+                }catch(InterruptedException e1){
+                    System.out.println("Interrupted occur");
+                }
+                this.flipAndUpdate(2);
             }
         }
         else if(this.mouseIsEntered == 1 && e.getSource() == this.bell.getLabel()){
-            this.server.ClientTime = System.currentTimeMillis();
+            System.out.println("RINGDINGDONG");
             //sendServerObject(System.currentTimeMillis());
             // TODO: Something that server should do to check this was valid bell ring or not.
 
