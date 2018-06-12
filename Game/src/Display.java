@@ -114,6 +114,7 @@ public class Display extends JFrame implements MouseListener{
         this.isFive();
         base_pane.revalidate();
         base_pane.repaint();
+        this.server.ServerTime = System.currentTimeMillis();
     }
     private int mouseIsEntered = 0;
     @Override
@@ -132,6 +133,7 @@ public class Display extends JFrame implements MouseListener{
         }
         else if(this.mouseIsEntered == 1 && e.getSource() == this.bell.getLabel()){
             System.out.println("RINGDINGDONG");
+            this.server.ClientTime = System.currentTimeMillis();
             //sendServerObject(System.currentTimeMillis());
             // TODO: Something that server should do to check this was valid bell ring or not.
             if(!this.isFive()){
@@ -185,7 +187,7 @@ public class Display extends JFrame implements MouseListener{
     */
 
     public synchronized boolean isFive(){
-        System.out.println("Sum is: "+Integer.toString(this.card_1.getCnt()) + Integer.toString(this.card_2.getCnt()));
+        //System.out.println("Sum is: "+Integer.toString(this.card_1.getCnt()) + Integer.toString(this.card_2.getCnt()));
         if(this.card_1.getFruit().equals(this.card_2.getFruit())){
             if(this.card_1.getCnt() + this.card_2.getCnt() == 5){
                 this.isFiveCondition = true;

@@ -10,8 +10,8 @@ public class Server implements Runnable{
     Socket clientSoc = null;
     boolean isPlayerTurn = true;
     boolean isPCTurn = false;
-    long ServerTime;
-    long ClientTime;
+    long ServerTime = 0;
+    long ClientTime = 0;
     boolean endGame = false;
     Server(){
         try {
@@ -35,7 +35,11 @@ public class Server implements Runnable{
             if(endGame) break;
 
             this.ServerTime = System.currentTimeMillis();
-
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             checkGame();
 
             /*
@@ -113,14 +117,10 @@ public class Server implements Runnable{
     private synchronized void checkGame(){
         if(this.client == null) return;
         if(this.client.getPlayerFrame() == null) return;
+        if(this.ClientTime == 0) return;
         if(this.client.getPlayerFrame().isFive()){
-            this.ServerTime = System.currentTimeMillis();
             System.out.println(this.ServerTime);
-            long tempTimeDiff = this.ServerTime - this.ClientTime;
-            if(tempTimeDiff  < 0){
-                tempTimeDiff = -tempTimeDiff;
-            }
-            if(tempTimeDiff >= 500){
+            if(Math.abs(this.ServerTime - this.ClientTime) >= 5000){
                 System.out.println("PC wins!");
             }else{
                 System.out.println("Player wins!");
