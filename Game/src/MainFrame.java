@@ -6,18 +6,21 @@ import java.util.*;
 
 public class MainFrame {
 
-	public static synchronized void main(String args[]){
+	public static void main(String args[]){
 
 	    Display GUIFrame = new Display();
 	    Deck deck1 = GUIFrame.getDeck(1);
 	    Deck deck2 = GUIFrame.getDeck(2);
-        Thread thread1 = null;
+        Thread serverThread = null;
+	    Thread thread1 = null;
         Thread thread2 = null;
 	    /*Server testing*/
         /*Currently not working, cause might be: portNum is not appropriate, or ArrayList<Thread> issue.*/
 
         Server server = new Server(5000);
-        new Thread(server).start();
+        serverThread = new Thread(server);
+        serverThread.start();
+
 
         System.out.println("Server sleeping begin...");
         try {
@@ -30,22 +33,25 @@ public class MainFrame {
         Client client_1 = new Client(deck1);
         System.out.println("client_1.start()");
         thread1 = new Thread(client_1);
-        thread1.start();
-        try {
-            thread1.join(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        synchronized (thread1) {
+            thread1.start();
+            try {
+                thread1.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
 
         Client client_2 = new Client(deck2);
         System.out.println("client_2.start()");
         thread2 = new Thread(client_2);
-        thread2.start();
-        try {
-            thread2.join(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        synchronized (thread2) {
+            thread2.start();
+            try {
+                thread2.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         /*
         * Client_3 should not be accepted

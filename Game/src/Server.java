@@ -34,42 +34,28 @@ public class Server implements Runnable{
         System.out.println("closing Server..");
     }
 
-    private synchronized boolean acceptClient(){
+    private boolean acceptClient(){
+
         if(this.clientNum >= 2){
             System.out.println("clientNum >= 2, break");
             return false;
         }
+
         Socket soc = null;
         try {
             soc = ss.accept();
 
-
             System.out.println("New client socket arrived");
-            this.clientNum++;
             OutputStream out = soc.getOutputStream();
             DataOutputStream dos = new DataOutputStream(out);
 
             dos.writeUTF("message from server");
 
-            InputStream in = soc.getInputStream();
-            ObjectInputStream ois = new ObjectInputStream(in);
+            this.clientNum++;
 
-            try {
-                this.topCard = (Card) ois.readObject();
-            } catch(NullPointerException e){
-                System.out.println("WTF");
-                return false;
-            }
-            System.out.println("This topcard's fruit: "+this.topCard.getFruit()+" and its num is:"+this.topCard.getCnt());
-
-            //dos.close();
-            //out.close();
-            //ois.close();
-            //in.close();
+            dos.close();
+            out.close();
         } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return false;
         }

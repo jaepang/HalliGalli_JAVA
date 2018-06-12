@@ -34,14 +34,10 @@ public class Client implements Runnable{
             System.out.println("Client closing....");
 
 
-            OutputStream out = soc.getOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(out);
+            notify();
+            dis.close();
+            in.close();
 
-            oos.writeObject(topCard);
-            //dis.close();
-            //in.close();
-            //oos.close();
-            //out.close();
             //soc.close();
 
         } catch (IOException e) {

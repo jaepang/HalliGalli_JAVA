@@ -14,7 +14,7 @@ public class Deck implements Serializable {
     }
     public void addCard(Card arg1){
         this.cards.add(arg1);
-        topCard = arg1;
+        this.topCard = arg1;
         arg1.setDeck(this);
         this.size ++;
     }
