@@ -33,32 +33,8 @@ public class Server implements Runnable{
         if(!this.acceptClient()) return;
         while(true){
             if(endGame) break;
-            /*
-            if(GetisDeckEmpty(this.clientSoc)){ // 0.5s
-                System.out.println("Computer won the game");
-                break;
-            }
-            else if(oppo.getOppoDeck().nextTopCard()){
-                System.out.println("Player won the game");
-            }
-            */
+
             // TODO: Turn starts ~
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-
-            if(isPlayerTurn){
-                this.client.getPlayerFrame().flipAndUpdate(1);
-                isPlayerTurn = false;
-                isPCTurn = true;
-            }else if(isPCTurn){
-                this.client.getPlayerFrame().flipAndUpdate(2);
-                isPlayerTurn = true;
-                isPCTurn = false;
-            }
 
             // TODO: ~ Flipping Card done until here
             this.ServerTime = System.currentTimeMillis();
