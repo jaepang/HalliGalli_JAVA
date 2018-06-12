@@ -16,7 +16,7 @@ public class Display extends JFrame implements MouseListener{
     private Deck deck_1, deck_2;
     ArrayList <Long> ringBellLog = new ArrayList<Long>();
 
-    public Display() {
+    public Display(Deck deck1, Deck deck2) {
         int width, height, card_width, card_height;
         /* 4:3 resolution */
         width = 800;
@@ -40,15 +40,13 @@ public class Display extends JFrame implements MouseListener{
         bell.setBounds(0, 0, width, height);
 
         /*Deck Class this.card_1*/
-        this.deck_1 = new Deck();
-        deck_1.createDeck();
+        this.deck_1 = deck1;
         System.out.println("Succeed building deck_1 . . .");
         this.card_1 = this.deck_1.getTopCard();
         card_1.setBounds(width/2 -card_width/2, height - card_height, card_width, card_height);
 
         /*Card Class this.card_2: this.card_1ing image*/
-        this.deck_2 = new Deck();
-        this.deck_2.createDeck();
+        this.deck_2 = deck2;
         System.out.println("Succeed building deck_2 . . .");
         this.card_2 = this.deck_2.getTopCard();
         this.card_2.setBounds(width/2 -card_width/2, 0, card_width, card_height);

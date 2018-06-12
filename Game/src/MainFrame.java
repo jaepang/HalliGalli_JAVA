@@ -8,9 +8,9 @@ public class MainFrame {
 
 	public static void main(String args[]){
 
-	    Display GUIFrame = new Display();
-	    Deck deck1 = GUIFrame.getDeck(1);
-	    Deck deck2 = GUIFrame.getDeck(2);
+	    //Display GUIFrame = new Display();
+	    Deck deck1 = new Deck();
+	    deck1.createDeck();
         Thread serverThread = null;
 	    Thread thread1 = null;
         Thread thread2 = null;
@@ -42,17 +42,6 @@ public class MainFrame {
             }
         }
 
-        Client client_2 = new Client(deck2);
-        System.out.println("client_2.start()");
-        thread2 = new Thread(client_2);
-        synchronized (thread2) {
-            thread2.start();
-            try {
-                thread2.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
         /*
         * Client_3 should not be accepted
         */

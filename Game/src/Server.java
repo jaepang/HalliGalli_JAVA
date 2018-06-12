@@ -4,6 +4,7 @@ import java.net.Socket;
 
 public class Server implements Runnable{
     private int clientNum = 0;
+    private Deck oppoDeck = new Deck();
     private Card topCard = null; // Temporally used; for checking object interchange
     ServerSocket ss = null;
     Server(){
@@ -43,11 +44,16 @@ public class Server implements Runnable{
 
         Socket soc = null;
         try {
+            this.oppoDeck.createDeck();
+            this.topCard = this.oppoDeck.getTopCard();
             soc = ss.accept();
 
             System.out.println("New client socket arrived");
             OutputStream out = soc.getOutputStream();
             DataOutputStream dos = new DataOutputStream(out);
+            ObjectOutputStream oos = new ObjectOutputStream(out);
+            oos.writeObject(this.oppoDeck);
+            oos.flush();
 
             dos.writeUTF("message from server");
             dos.flush();
