@@ -97,7 +97,7 @@ public class Deck implements Serializable {
         long seed = System.nanoTime();
         Collections.shuffle(this.cards, new Random(seed));
     }
-    public void sendServerBool(boolean bool){
+    public synchronized void sendServerBool(boolean bool){
         //Socket soc = client.getSoc();
         try {
             Socket soc = new Socket("localhost",5000);

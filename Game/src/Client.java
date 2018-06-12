@@ -9,6 +9,7 @@ public class Client implements Runnable{
     private Deck deck = null;
     private Card oppoTopCard = null;
     private Deck oppoDeck = null;
+    private Server server = null;
     Client(){
         this.deck = new Deck();
         this.deck.createDeck();
@@ -64,4 +65,11 @@ public class Client implements Runnable{
         return this.soc;
     }
 
+    public void setServer(Server server){
+        this.server = server;
+    }
+
+    public Server getServer() {
+        return this.server;
+    }
 }

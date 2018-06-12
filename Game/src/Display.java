@@ -21,6 +21,7 @@ public class Display extends JFrame implements MouseListener{
     private Card card_1, card_2;
     private Deck deck_1, deck_2;
     private Client client = null;
+    private Server server = null;
     private boolean isFiveCondition = false;
     public Display(Deck deck1, Deck deck2) {
         int width, height, card_width, card_height;
@@ -63,6 +64,7 @@ public class Display extends JFrame implements MouseListener{
         this.pack();
         this.setVisible(true);
 
+        this.setServer(this.client.getServer());
         /* Mouse click eventListener used for this.card_1ing*/
         this.card_1.addMouseListener(this);
         this.bell.getLabel().addMouseListener(this);
@@ -110,16 +112,25 @@ public class Display extends JFrame implements MouseListener{
         this.isFive();
         base_pane.revalidate();
         base_pane.repaint();
+        if(isFiveCondition){
+            //TODO: Send server flag; indicating to start checking times
+
+        }
     }
     private int mouseIsEntered = 0;
     @Override
     public void mouseClicked(MouseEvent e){
         if(this.mouseIsEntered == 1 && e.getSource()==card_1) {
             System.out.println("CLICKED CARD");
-            this.flipAndUpdate(1);
+            if(this.server.isPCTurn) {
+                this.flipAndUpdate(1);
+            }
         }
         else if(this.mouseIsEntered == 1 && e.getSource() == this.bell.getLabel()){
+            this.server.ClientTime = System.currentTimeMillis();
             //sendServerObject(System.currentTimeMillis());
+            // TODO: Something that server should do to check this was valid bell ring or not.
+
         }
     }
     @Override
@@ -143,6 +154,10 @@ public class Display extends JFrame implements MouseListener{
         this.client = client;
     }
 
+    public void setServer(Server server){
+        this.server = server;
+    }
+    /*
     public synchronized void sendServerObject(Object o){
         //Socket soc = client.getSoc();
         try {
@@ -158,6 +173,7 @@ public class Display extends JFrame implements MouseListener{
             e.printStackTrace();
         }
     }
+    */
 
     public boolean isFive(){
         if(this.card_1.getFruit() == this.card_2.getFruit()){

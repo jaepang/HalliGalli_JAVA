@@ -7,7 +7,10 @@ public class Server implements Runnable{
     private Opponent oppo = new Opponent();
     ServerSocket ss = null;
     Socket clientSoc = null;
+    boolean isPlayerTurn = true;
+    boolean isPCTurn = false;
     long ServerTime;
+    long ClientTime;
     Server(){
         try {
             this.ss = new ServerSocket(5000);
@@ -34,7 +37,17 @@ public class Server implements Runnable{
             else if(oppo.getOppoDeck().nextTopCard()){
                 System.out.println("Player won the game");
             }
-            // TODO: Turn starts ~ Flipping Card done here
+            // TODO: Turn starts ~
+            if(isPlayerTurn){
+                // ~~
+                isPlayerTurn = false;
+                isPCTurn = true;
+            }else if(isPCTurn){
+                // ~~
+                isPlayerTurn = true;
+                isPCTurn = false;
+            }
+            // TODO: ~ Flipping Card done here
             this.ServerTime = System.currentTimeMillis();
             if(GetBellRing(this.clientSoc) >= 500){ // 0.5s
                 System.out.println("PC wins this turn");
@@ -70,7 +83,7 @@ public class Server implements Runnable{
         return false;
     }
 
-    private long GetBellRing(Socket clientSoc){
+    private synchronized long GetBellRing(Socket clientSoc){
         long clientBellTime = 0;
         Socket displaySoc = null;
         try {
@@ -90,7 +103,7 @@ public class Server implements Runnable{
             return 0;
         }
     }
-    private boolean GetisDeckEmpty(Socket clientSoc){
+    private synchronized boolean GetisDeckEmpty(Socket clientSoc){
         boolean isPlayerEmpty;
         Socket displaySoc = null;
         try {

@@ -30,6 +30,7 @@ public class MainFrame {
 
         Client client_1 = new Client(deck1);
         System.out.println("client_1.start()");
+        client_1.setServer(server);
         thread1 = new Thread(client_1);
         synchronized (thread1) {
             thread1.start();
