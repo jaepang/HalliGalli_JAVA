@@ -134,10 +134,9 @@ public class Display extends JFrame implements MouseListener{
         else if(this.mouseIsEntered == 1 && e.getSource() == this.bell.getLabel()){
             System.out.println("RINGDINGDONG");
             this.server.ClientTime = System.currentTimeMillis();
-            //sendServerObject(System.currentTimeMillis());
-            // TODO: Something that server should do to check this was valid bell ring or not.
             if(!this.isFive()){
                 System.out.println("Not five!"); // Player should lose.
+                System.out.println("Player losed");
             }else{
                 System.out.println("FIVE!");
             }

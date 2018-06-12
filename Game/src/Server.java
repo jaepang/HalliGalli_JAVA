@@ -35,7 +35,6 @@ public class Server implements Runnable{
         while(true){
             if(endGame) break;
 
-            this.ServerTime = System.currentTimeMillis();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

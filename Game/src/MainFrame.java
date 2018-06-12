@@ -36,11 +36,11 @@ public class MainFrame {
         thread1 = new Thread(client_1);
         synchronized (thread1) {
             thread1.start();
-            try {
+            /*try {
                 thread1.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
 
     }
