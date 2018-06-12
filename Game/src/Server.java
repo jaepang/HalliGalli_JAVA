@@ -55,7 +55,7 @@ public class Server implements Runnable{
             ObjectInputStream ois = new ObjectInputStream(in);
 
             this.topCard = (Card)ois.readObject();
-            System.out.println("This topcard's fruit:"+this.topCard.getFruit());
+            System.out.println("This topcard's fruit:"+this.topCard.getFruit()+"and its num is:"+this.topCard.getCnt());
 
             dos.close();
             out.close();
