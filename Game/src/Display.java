@@ -134,6 +134,11 @@ public class Display extends JFrame implements MouseListener{
             System.out.println("RINGDINGDONG");
             //sendServerObject(System.currentTimeMillis());
             // TODO: Something that server should do to check this was valid bell ring or not.
+            if(!this.isFive()){
+                System.out.println("Not five!");
+            }else{
+                System.out.println("FIVE!");
+            }
 
         }
     }
@@ -179,14 +184,20 @@ public class Display extends JFrame implements MouseListener{
     }
     */
 
-    public boolean isFive(){
-        if(this.card_1.getFruit() == this.card_2.getFruit()){
+    public synchronized boolean isFive(){
+        System.out.println("Sum is: "+Integer.toString(this.card_1.getCnt()) + Integer.toString(this.card_2.getCnt()));
+        if(this.card_1.getFruit().equals(this.card_2.getFruit())){
             if(this.card_1.getCnt() + this.card_2.getCnt() == 5){
                 this.isFiveCondition = true;
                 return true;
             }
             this.isFiveCondition = false;
             return false;
+        }else{
+            if(this.card_1.getCnt() == 5 || this.card_2.getCnt() == 5){
+                this.isFiveCondition = true;
+                return true;
+            }
         }
         this.isFiveCondition = false;
         return false;
