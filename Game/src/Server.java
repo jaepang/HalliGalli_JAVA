@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
 public class Server implements Runnable{
@@ -13,6 +14,8 @@ public class Server implements Runnable{
     long ServerTime = 0;
     long ClientTime = 0;
     boolean endGame = false;
+    boolean whoWon;
+    private int cmd;
     long level = 5000;
     Server(){
         try {
@@ -32,8 +35,8 @@ public class Server implements Runnable{
     @Override
     public void run(){
         if(!this.acceptClient()) return;
-        while(true){
-            if(endGame) break;
+        while(true) {
+            if (endGame) break;
 
             try {
                 Thread.sleep(1000);
@@ -41,16 +44,22 @@ public class Server implements Runnable{
                 e.printStackTrace();
             }
             checkGame();
-
-            /*
-            if(GetBellRing(this.clientSoc) >= 500){ // 0.5s
-                System.out.println("PC wins!");
-            }else{
-                System.out.println("User wins!");
+            String Option[] = {"Quit", "Play again"};
+            if(endGame) {
+                if (whoWon) {
+                    cmd = JOptionPane.showOptionDialog(this.client.getPlayerFrame(), "You won! Play again?", "End of Game", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, Option, "Quit");
+                } else {
+                    cmd = JOptionPane.showOptionDialog(this.client.getPlayerFrame(), "You Lose! Play again?", "End of Game", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, Option, "Quit");
+                }
+                if(cmd == 0){
+                    System.exit(0);
+                }
+                else{
+                    this.client.getPlayerFrame().dispose();
+                    MainFrame.Restart();
+                }
             }
-            */
         }
-
         System.out.println("closing Server..");
     }
 
@@ -122,12 +131,16 @@ public class Server implements Runnable{
             System.out.println(this.ServerTime);
             if(Math.abs(this.ServerTime - this.ClientTime) >= level){
                 System.out.println("PC wins!");
+                whoWon = false;
             }else{
                 System.out.println("Player wins!");
-
+                whoWon = true;
             }
             this.endGame = true;
         }
+    }
+    public int getCmd(){
+        return this.cmd;
     }
 }
 
