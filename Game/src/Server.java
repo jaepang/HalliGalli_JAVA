@@ -58,14 +58,14 @@ public class Server implements Runnable{
                 this.topCard = (Card) ois.readObject();
             } catch(NullPointerException e){
                 System.out.println("WTF");
+                return false;
             }
             System.out.println("This topcard's fruit: "+this.topCard.getFruit()+" and its num is:"+this.topCard.getCnt());
 
-            dos.close();
-            out.close();
-            ois.close();
-            in.close();
-            soc.close();
+            //dos.close();
+            //out.close();
+            //ois.close();
+            //in.close();
         } catch (IOException e) {
             e.printStackTrace();
             return false;

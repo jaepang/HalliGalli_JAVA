@@ -38,11 +38,11 @@ public class Client implements Runnable{
             ObjectOutputStream oos = new ObjectOutputStream(out);
 
             oos.writeObject(topCard);
-            dis.close();
-            in.close();
-            oos.close();
-            out.close();
-            soc.close();
+            //dis.close();
+            //in.close();
+            //oos.close();
+            //out.close();
+            //soc.close();
 
         } catch (IOException e) {
             e.printStackTrace();
