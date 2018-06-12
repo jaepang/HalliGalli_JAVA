@@ -6,11 +6,13 @@ import java.util.ArrayList;
 public class Server implements Runnable{
     private Opponent oppo = new Opponent();
     ServerSocket ss = null;
+    Client client = null;
     Socket clientSoc = null;
     boolean isPlayerTurn = true;
     boolean isPCTurn = false;
     long ServerTime;
     long ClientTime;
+    boolean endGame = false;
     Server(){
         try {
             this.ss = new ServerSocket(5000);
@@ -30,6 +32,8 @@ public class Server implements Runnable{
     public void run(){
         if(!this.acceptClient()) return;
         while(true){
+            if(endGame) break;
+            /*
             if(GetisDeckEmpty(this.clientSoc)){ // 0.5s
                 System.out.println("Computer won the game");
                 break;
@@ -37,25 +41,40 @@ public class Server implements Runnable{
             else if(oppo.getOppoDeck().nextTopCard()){
                 System.out.println("Player won the game");
             }
+            */
             // TODO: Turn starts ~
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
             if(isPlayerTurn){
-                // ~~
+                this.client.getPlayerFrame().flipAndUpdate(1);
                 isPlayerTurn = false;
                 isPCTurn = true;
             }else if(isPCTurn){
-                // ~~
+                this.client.getPlayerFrame().flipAndUpdate(2);
                 isPlayerTurn = true;
                 isPCTurn = false;
             }
-            // TODO: ~ Flipping Card done here
+
+            // TODO: ~ Flipping Card done until here
             this.ServerTime = System.currentTimeMillis();
+
+            checkGame();
+
+            /*
             if(GetBellRing(this.clientSoc) >= 500){ // 0.5s
-                System.out.println("PC wins this turn");
-                // TODO: Computer Would Get Card
+                System.out.println("PC wins!");
+            }else{
+                System.out.println("User wins!");
             }
+            */
         }
 
-        //System.out.println("closing Server..");
+        System.out.println("closing Server..");
     }
 
     private synchronized boolean acceptClient(){
@@ -115,6 +134,23 @@ public class Server implements Runnable{
         } catch (IOException e) {
             System.out.println("Read Boolean error");
             return true;
+        }
+    }
+
+    private synchronized void checkGame(){
+        if(this.client.getPlayerFrame().isFive()){
+            this.ServerTime = System.currentTimeMillis();
+            long tempTimeDiff = this.ServerTime - this.ClientTime;
+            if(tempTimeDiff  < 0){
+                tempTimeDiff = -tempTimeDiff;
+            }
+            if(tempTimeDiff >= 500){
+                System.out.println("PC wins!");
+            }else{
+                System.out.println("Player wins!");
+
+            }
+            this.endGame = true;
         }
     }
 }

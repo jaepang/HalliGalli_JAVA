@@ -23,7 +23,7 @@ public class Display extends JFrame implements MouseListener{
     private Client client = null;
     private Server server = null;
     private boolean isFiveCondition = false;
-    public Display(Deck deck1, Deck deck2) {
+    public Display(Deck deck1, Deck deck2, Client cli_arg) {
         int width, height, card_width, card_height;
         /* 4:3 resolution */
         width = 800;
@@ -63,6 +63,8 @@ public class Display extends JFrame implements MouseListener{
         base_pane.add(this.card_2, new Integer(1), 1);
         this.pack();
         this.setVisible(true);
+
+        this.client = cli_arg;
 
         this.setServer(this.client.getServer());
         /* Mouse click eventListener used for this.card_1ing*/
@@ -112,10 +114,6 @@ public class Display extends JFrame implements MouseListener{
         this.isFive();
         base_pane.revalidate();
         base_pane.repaint();
-        if(isFiveCondition){
-            //TODO: Send server flag; indicating to start checking times
-
-        }
     }
     private int mouseIsEntered = 0;
     @Override

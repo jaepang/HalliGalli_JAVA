@@ -18,14 +18,14 @@ public class MainFrame {
         serverThread = new Thread(server);
         serverThread.start();
 
-        /*
+
         System.out.println("Server sleeping begin...");
         try {
             Thread.sleep(2*1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        */
+
         System.out.println("Server starts making clients");
 
         Client client_1 = new Client(deck1);
@@ -34,6 +34,11 @@ public class MainFrame {
         thread1 = new Thread(client_1);
         synchronized (thread1) {
             thread1.start();
+            try {
+                thread1.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     }

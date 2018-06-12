@@ -23,8 +23,7 @@ public class Client implements Runnable{
     @Override
     public void run(){
         this.acceptServer();
-        this.playerFrame = new Display(this.deck, this.oppoDeck);
-        this.playerFrame.setClient(this);
+        this.playerFrame = new Display(this.deck, this.oppoDeck, this);
     }
 
     private synchronized boolean acceptServer(){
@@ -65,11 +64,15 @@ public class Client implements Runnable{
         return this.soc;
     }
 
-    public void setServer(Server server){
+    public synchronized void setServer(Server server){
         this.server = server;
+        server.client = this;
     }
 
     public Server getServer() {
         return this.server;
+    }
+    public Display getPlayerFrame(){
+        return this.playerFrame;
     }
 }
