@@ -6,9 +6,11 @@ import java.util.*;
 
 public class MainFrame {
 
-	public static void main(String args[]){
+	public static synchronized void main(String args[]){
 
-	    new Display();
+	    Display GUIFrame = new Display();
+	    Deck deck1 = GUIFrame.getDeck(1);
+	    Deck deck2 = GUIFrame.getDeck(2);
 
 	    /*Server testing*/
         /*Currently not working, cause might be: portNum is not appropriate, or ArrayList<Thread> issue.*/
@@ -18,26 +20,26 @@ public class MainFrame {
 
         System.out.println("Server sleeping begin...");
         try {
-            Thread.sleep(2*1000);
+            Thread.sleep(15*1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         System.out.println("Server starts making clients");
 
-        Client client_1 = new Client();
+        Client client_1 = new Client(deck1);
         System.out.println("client_1.start()");
         new Thread(client_1).start();
 
-        Client client_2 = new Client();
+        Client client_2 = new Client(deck2);
         System.out.println("client_2.start()");
         new Thread(client_2).start();
 
         /*
         * Client_3 should not be accepted
         */
-        Client client_3 = new Client();
-        System.out.println("client_3.start()");
-        new Thread(client_3).start();
+        //Client client_3 = new Client();
+        //System.out.println("client_3.start()");
+        //new Thread(client_3).start();
 
     }
 

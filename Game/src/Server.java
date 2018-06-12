@@ -31,7 +31,7 @@ public class Server implements Runnable{
             }
         }
 
-        System.out.println("clientNum >= 2");
+        System.out.println("closing Server..");
     }
 
     private synchronized boolean acceptClient(){
@@ -54,8 +54,12 @@ public class Server implements Runnable{
             InputStream in = soc.getInputStream();
             ObjectInputStream ois = new ObjectInputStream(in);
 
-            this.topCard = (Card)ois.readObject();
-            System.out.println("This topcard's fruit:"+this.topCard.getFruit()+"and its num is:"+this.topCard.getCnt());
+            try {
+                this.topCard = (Card) ois.readObject();
+            } catch(NullPointerException e){
+                System.out.println("WTF");
+            }
+            System.out.println("This topcard's fruit: "+this.topCard.getFruit()+" and its num is:"+this.topCard.getCnt());
 
             dos.close();
             out.close();

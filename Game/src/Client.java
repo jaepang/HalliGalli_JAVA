@@ -11,6 +11,10 @@ public class Client implements Runnable{
         this.deck.createDeck();
         this.topCard = this.deck.getTopCard();
     }
+    Client(Deck inputDeck){
+        this.deck = inputDeck;
+        this.topCard = this.deck.getTopCard();
+    }
 
     @Override
     public void run(){
