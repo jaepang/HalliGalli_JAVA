@@ -13,6 +13,7 @@ public class Server implements Runnable{
     long ServerTime = 0;
     long ClientTime = 0;
     boolean endGame = false;
+    long level = 5000;
     Server(){
         try {
             this.ss = new ServerSocket(5000);
@@ -120,7 +121,7 @@ public class Server implements Runnable{
         if(this.ClientTime == 0) return;
         if(this.client.getPlayerFrame().isFive()){
             System.out.println(this.ServerTime);
-            if(Math.abs(this.ServerTime - this.ClientTime) >= 5000){
+            if(Math.abs(this.ServerTime - this.ClientTime) >= level){
                 System.out.println("PC wins!");
             }else{
                 System.out.println("Player wins!");

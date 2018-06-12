@@ -15,6 +15,8 @@ public class MainFrame {
 	    Thread thread1 = null;
 
         Server server = new Server(5000);
+        SetLevelDialogue sld = new SetLevelDialogue(server);
+        new Thread(sld).start();
         serverThread = new Thread(server);
         serverThread.start();
 
