@@ -23,6 +23,7 @@ public class Client implements Runnable{
     public void run(){
         this.acceptServer();
         this.playerFrame = new Display(this.deck, this.oppoDeck);
+        this.playerFrame.setClient(this);
     }
 
     private synchronized boolean acceptServer(){
@@ -47,16 +48,20 @@ public class Client implements Runnable{
             System.out.println("Fruit:"+this.oppoTopCard.getFruit());
             System.out.println("Client closing....");
 
-            //dis.close();
-            //in.close();
+            dis.close();
+            in.close();
 
-            //soc.close();
+            soc.close();
 
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
         return true;
+    }
+
+    public Socket getSoc(){
+        return this.soc;
     }
 
 }

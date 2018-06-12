@@ -2,6 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.util.*;
 
 public class Display extends JFrame implements MouseListener{
@@ -14,6 +19,7 @@ public class Display extends JFrame implements MouseListener{
     private Bell bell = new Bell();
     private Card card_1, card_2;
     private Deck deck_1, deck_2;
+    private Client client = null;
     ArrayList <Long> ringBellLog = new ArrayList<Long>();
 
     public Display(Deck deck1, Deck deck2) {
@@ -112,7 +118,7 @@ public class Display extends JFrame implements MouseListener{
             this.flipAndUpdate(1);
         }
         else if(this.mouseIsEntered == 1 && e.getSource() == this.bell.getLabel()){
-            ringBellLog.add(System.currentTimeMillis());
+            sendServerObject(System.currentTimeMillis());
             for(int i=0; i<ringBellLog.size(); i++){
                 System.out.print(ringBellLog.get(i)+" ");
             }
@@ -136,4 +142,23 @@ public class Display extends JFrame implements MouseListener{
 
     }
 
+    public void setClient(Client client){
+        this.client = client;
+    }
+
+    public void sendServerObject(Object o){
+        //Socket soc = client.getSoc();
+        try {
+            Socket soc = new Socket("localhost",5000);
+            OutputStream os = null;
+            os = soc.getOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(os);
+            oos.writeObject(o);
+            oos.flush();
+            os.close();
+            soc.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

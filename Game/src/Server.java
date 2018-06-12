@@ -26,18 +26,21 @@ public class Server implements Runnable{
     public void run(){
         if(!this.acceptClient()) return;
         while(true){
-            if(/*Player or Computer is out of card*/){
+
+            //if(/*Player or Computer is out of card*/){
                 // TODO: Game ends
                 // Player wins or Computer wins
-                break;
-            }
+                //break;
+            //}
+            // TODO: Turn starts ~ Flipping Card done here
             this.ServerTime = System.currentTimeMillis();
             if(GetBellRing(this.clientSoc) >= 500){ // 0.5s
+                System.out.println("PC wins this turn");
                 // TODO: Computer Would Get Card
             }
         }
 
-        System.out.println("closing Server..");
+        //System.out.println("closing Server..");
     }
 
     private synchronized boolean acceptClient(){
@@ -55,8 +58,9 @@ public class Server implements Runnable{
 
             dos.writeUTF("message from server");
             dos.flush();
-            //dos.close();
-            //out.close();
+            dos.close();
+            out.close();
+            clientSoc.close();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -65,9 +69,11 @@ public class Server implements Runnable{
     }
 
     private long GetBellRing(Socket clientSoc){
-        long clientBellTime;
+        long clientBellTime = 0;
+        Socket displaySoc = null;
         try {
-            InputStream is = clientSoc.getInputStream();
+            displaySoc = ss.accept();
+            InputStream is = displaySoc.getInputStream();
             DataInputStream dis = new DataInputStream(is);
             clientBellTime = dis.readLong();
             long timeDifference = clientBellTime - this.ServerTime;
@@ -76,9 +82,11 @@ public class Server implements Runnable{
             }
             return timeDifference;
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            return 0;
         }
     }
+
 }
 
 class Opponent implements Serializable{
@@ -95,4 +103,3 @@ class Opponent implements Serializable{
         return this.oppoDeck;
     }
 }
-
