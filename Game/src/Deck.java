@@ -1,4 +1,8 @@
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.net.Socket;
 import java.util.*;
 
 public class Deck implements Serializable {
@@ -31,14 +35,18 @@ public class Deck implements Serializable {
     public int getSize(){
         return this.size;
     }
-    public void nextTopCard(){
+    public boolean nextTopCard(){
         this.topIdx = this.topIdx + 1;
         try {
             this.topCard = this.cards.get(this.topIdx);
             this.size --;
         } catch(IndexOutOfBoundsException e){
             System.out.println("Player1 Lose; Lost every card");
+            sendServerBool(true);
+            return true;
         }
+        sendServerBool(false);
+        return false;
     }
     /* make deck and shuffle */
     public void createDeck(){
@@ -88,5 +96,20 @@ public class Deck implements Serializable {
         /* Shuffle Deck After merging */
         long seed = System.nanoTime();
         Collections.shuffle(this.cards, new Random(seed));
+    }
+    public void sendServerBool(boolean bool){
+        //Socket soc = client.getSoc();
+        try {
+            Socket soc = new Socket("localhost",5000);
+            OutputStream os = null;
+            os = soc.getOutputStream();
+            DataOutputStream oos = new DataOutputStream(os);
+            oos.writeBoolean(bool);
+            oos.flush();
+            os.close();
+            soc.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

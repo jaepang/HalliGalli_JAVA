@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Server implements Runnable{
     private Opponent oppo = new Opponent();
@@ -26,12 +27,13 @@ public class Server implements Runnable{
     public void run(){
         if(!this.acceptClient()) return;
         while(true){
-
-            //if(/*Player or Computer is out of card*/){
-                // TODO: Game ends
-                // Player wins or Computer wins
-                //break;
-            //}
+            if(GetisDeckEmpty(this.clientSoc)){ // 0.5s
+                System.out.println("Computer won the game");
+                break;
+            }
+            else if(oppo.getOppoDeck().nextTopCard()){
+                System.out.println("Player won the game");
+            }
             // TODO: Turn starts ~ Flipping Card done here
             this.ServerTime = System.currentTimeMillis();
             if(GetBellRing(this.clientSoc) >= 500){ // 0.5s
@@ -86,7 +88,19 @@ public class Server implements Runnable{
             return 0;
         }
     }
-
+    private boolean GetisDeckEmpty(Socket clientSoc){
+        boolean isPlayerEmpty;
+        Socket displaySoc = null;
+        try {
+            displaySoc = ss.accept();
+            InputStream is = displaySoc.getInputStream();
+            DataInputStream dis = new DataInputStream(is);
+            isPlayerEmpty = dis.readBoolean();
+            return isPlayerEmpty;
+        } catch (IOException e) {
+            System.out.println("Read Boolean error");
+        }
+    }
 }
 
 class Opponent implements Serializable{
