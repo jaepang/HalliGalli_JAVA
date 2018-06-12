@@ -5,6 +5,8 @@ import java.net.Socket;
 public class Server implements Runnable{
     private Opponent oppo = new Opponent();
     ServerSocket ss = null;
+    Socket clientSoc = null;
+    long ServerTime;
     Server(){
         try {
             this.ss = new ServerSocket(5000);
@@ -22,9 +24,16 @@ public class Server implements Runnable{
 
     @Override
     public void run(){
+        if(!this.acceptClient()) return;
         while(true){
-            if(!this.acceptClient()){
+            if(/*Player or Computer is out of card*/){
+                // TODO: Game ends
+                // Player wins or Computer wins
                 break;
+            }
+            this.ServerTime = System.currentTimeMillis();
+            if(GetBellRing(this.clientSoc) >= 500){ // 0.5s
+                // TODO: Computer Would Get Card
             }
         }
 
@@ -32,13 +41,13 @@ public class Server implements Runnable{
     }
 
     private synchronized boolean acceptClient(){
-        Socket soc = null;
+        clientSoc = null;
         try {
-            soc = ss.accept();
+            clientSoc = ss.accept();
 
             System.out.println("New client socket arrived");
             this.oppo = new Opponent();
-            OutputStream out = soc.getOutputStream();
+            OutputStream out = clientSoc.getOutputStream();
             DataOutputStream dos = new DataOutputStream(out);
             ObjectOutputStream oos = new ObjectOutputStream(out);
             oos.writeObject(this.oppo.getOppoDeck());
@@ -52,7 +61,23 @@ public class Server implements Runnable{
             e.printStackTrace();
             return false;
         }
-        return true;
+        return false;
+    }
+
+    private long GetBellRing(Socket clientSoc){
+        long clientBellTime;
+        try {
+            InputStream is = clientSoc.getInputStream();
+            DataInputStream dis = new DataInputStream(is);
+            clientBellTime = dis.readLong();
+            long timeDifference = clientBellTime - this.ServerTime;
+            if(timeDifference < 0){
+                timeDifference = -timeDifference;
+            }
+            return timeDifference;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
@@ -69,7 +94,5 @@ class Opponent implements Serializable{
     public Deck getOppoDeck(){
         return this.oppoDeck;
     }
-
-
-
 }
+

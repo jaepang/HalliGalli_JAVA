@@ -13,21 +13,19 @@ public class MainFrame {
 	    deck1.createDeck();
         Thread serverThread = null;
 	    Thread thread1 = null;
-        Thread thread2 = null;
-	    /*Server testing*/
-        /*Currently not working, cause might be: portNum is not appropriate, or ArrayList<Thread> issue.*/
 
         Server server = new Server(5000);
         serverThread = new Thread(server);
         serverThread.start();
 
-
+        /*
         System.out.println("Server sleeping begin...");
         try {
             Thread.sleep(2*1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        */
         System.out.println("Server starts making clients");
 
         Client client_1 = new Client(deck1);
@@ -41,13 +39,6 @@ public class MainFrame {
                 e.printStackTrace();
             }
         }
-
-        /*
-        * Client_3 should not be accepted
-        */
-        //Client client_3 = new Client();
-        //System.out.println("client_3.start()");
-        //new Thread(client_3).start();
 
     }
 
