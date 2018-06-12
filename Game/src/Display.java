@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
+import java.io.DataOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.*;
@@ -20,7 +21,6 @@ public class Display extends JFrame implements MouseListener{
     private Card card_1, card_2;
     private Deck deck_1, deck_2;
     private Client client = null;
-    ArrayList <Long> ringBellLog = new ArrayList<Long>();
 
     public Display(Deck deck1, Deck deck2) {
         int width, height, card_width, card_height;
@@ -119,10 +119,6 @@ public class Display extends JFrame implements MouseListener{
         }
         else if(this.mouseIsEntered == 1 && e.getSource() == this.bell.getLabel()){
             sendServerObject(System.currentTimeMillis());
-            for(int i=0; i<ringBellLog.size(); i++){
-                System.out.print(ringBellLog.get(i)+" ");
-            }
-            System.out.println();
         }
     }
     @Override
