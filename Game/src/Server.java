@@ -34,9 +34,6 @@ public class Server implements Runnable{
         while(true){
             if(endGame) break;
 
-            // TODO: Turn starts ~
-
-            // TODO: ~ Flipping Card done until here
             this.ServerTime = System.currentTimeMillis();
 
             checkGame();
@@ -75,7 +72,7 @@ public class Server implements Runnable{
             e.printStackTrace();
             return false;
         }
-        return false;
+        return true;
     }
 
     private synchronized long GetBellRing(Socket clientSoc){
@@ -114,8 +111,11 @@ public class Server implements Runnable{
     }
 
     private synchronized void checkGame(){
+        if(this.client == null) return;
+        if(this.client.getPlayerFrame() == null) return;
         if(this.client.getPlayerFrame().isFive()){
             this.ServerTime = System.currentTimeMillis();
+            System.out.println(this.ServerTime);
             long tempTimeDiff = this.ServerTime - this.ClientTime;
             if(tempTimeDiff  < 0){
                 tempTimeDiff = -tempTimeDiff;
